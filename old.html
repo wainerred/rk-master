@@ -50,21 +50,13 @@
             padding: 15px 0;
         }
 
-        /* Логотип */
         .logo {
-            display: flex;
-            align-items: center;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-transform: uppercase;
             text-decoration: none;
-        }
-
-        .logo-img {
-            height: 50px; /* Высота логотипа */
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover .logo-img {
-            transform: scale(1.05);
+            letter-spacing: 1px;
         }
 
         /* Навигация для десктопа */
@@ -607,11 +599,6 @@
                 display: flex;
             }
             
-            /* Уменьшаем логотип на мобильных */
-            .logo-img {
-                height: 40px;
-            }
-            
             .about-content, .contact-wrapper {
                 flex-direction: column;
             }
@@ -660,11 +647,6 @@
             .mobile-nav {
                 width: 250px;
             }
-            
-            /* Еще меньше логотип на очень маленьких экранах */
-            .logo-img {
-                height: 35px;
-            }
         }
     </style>
 </head>
@@ -673,10 +655,7 @@
     <header>
         <div class="container">
             <nav>
-                <!-- Логотип -->
-                <a href="#" class="logo">
-                    <img src="logo.png" alt="РК Мастер - Наружная реклама в Екатеринбурге" class="logo-img">
-                </a>
+                <a href="#" class="logo">РК Мастер</a>
                 
                 <!-- Десктопное меню -->
                 <ul class="nav-links">
