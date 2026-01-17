@@ -84,7 +84,7 @@
             border-bottom: 2px solid var(--primary-color);
         }
 
-        /* Герой-секция - ОБНОВЛЕННЫЕ СТИЛИ */
+        /* Герой-секция */
         .hero {
             background: linear-gradient(rgba(60, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/1600x900/?city,traffic,billboard');
             background-size: cover;
@@ -314,7 +314,7 @@
         }
         
         .review-card::before {
-            content: '“';
+            content: '"';
             position: absolute;
             top: 10px;
             left: 15px;
@@ -356,10 +356,10 @@
         }
 
         .contact-wrapper {
-             display: flex;
-             flex-wrap: wrap;
-             justify-content: space-between;
-             padding-bottom: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding-bottom: 60px;
         }
 
         .contact-info {
@@ -399,6 +399,7 @@
             text-decoration: underline;
         }
 
+        /* Карта */
         .map-container {
             flex: 1.5;
             min-width: 400px;
@@ -408,17 +409,35 @@
             overflow: hidden;
             margin-left: 30px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            position: relative;
         }
         
-        .map-placeholder {
+        #yandex-map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Стиль для сообщения об ошибке */
+        .map-error {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #aaa;
-            background: url('https://via.placeholder.com/800x450/333333/d32f2f?text=Карта+Екатеринбурга') center/cover;
-            font-size: 1.2rem;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .map-error h3 {
+            color: white;
+            margin-bottom: 15px;
         }
 
         /* Footer */
@@ -688,8 +707,17 @@
                     </div>
                 </div>
                 <div class="map-container">
-                    <div class="map-placeholder">
-                        [Интерактивная карта Яндекс/Google]
+                    <div id="yandex-map"></div>
+                    <div id="map-error" class="map-error">
+                        <h3>Карта временно недоступна</h3>
+                        <p>Вы можете найти нас по адресу:</p>
+                        <p><strong>г. Екатеринбург, ул. Чебышёва, 6</strong></p>
+                        <a href="https://yandex.ru/maps/54/yekaterinburg/?ll=60.597465%2C56.838011&mode=search&sll=60.597465%2C56.838011&text=%D0%B3.%20%D0%95%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B1%D1%83%D1%80%D0%B3%2C%20%D1%83%D0%BB.%20%D0%A7%D0%B5%D0%B1%D1%8B%D1%88%D1%91%D0%B2%D0%B0%2C%206&z=17" 
+                           target="_blank" 
+                           class="btn" 
+                           style="margin-top: 15px; padding: 10px 20px;">
+                            Открыть в Яндекс.Картах
+                        </a>
                     </div>
                 </div>
             </div>
@@ -702,5 +730,105 @@
         </div>
     </footer>
 
+    <!-- ******************************* -->
+    <!-- ЯНДЕКС КАРТА - НАСТРОЙКА API КЛЮЧА -->
+    <!-- ******************************* -->
+    <!-- 
+        ВНИМАНИЕ: Чтобы карта работала, нужно получить API ключ:
+        1. Перейдите на https://developer.tech.yandex.ru/services/
+        2. Зарегистрируйтесь или войдите через Яндекс
+        3. Создайте новый ключ для "JavaScript API и HTTP Геокодер"
+        4. Вставьте ключ ниже вместо 'ВАШ_API_КЛЮЧ_ЗДЕСЬ'
+        
+        Пример ключа: 123e4567-e89b-12d3-a456-426614174000
+    -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=dece7122-2bf3-47df-8c15-2187ae065a6e" type="text/javascript"></script>
+    
+    <script>
+        // Таймаут для загрузки карты
+        let mapLoadTimeout;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Запускаем таймер на 5 секунд
+            mapLoadTimeout = setTimeout(showMapError, 5000);
+            
+            // Проверяем, загрузился ли API Яндекс.Карт
+            if (typeof ymaps !== 'undefined') {
+                ymaps.ready(initMap);
+            } else {
+                console.error('Yandex Maps API не загружен');
+                showMapError();
+            }
+            
+            function initMap() {
+                clearTimeout(mapLoadTimeout);
+                
+                try {
+                    // Создаем карту
+                    var myMap = new ymaps.Map('yandex-map', {
+                        center: [56.824327, 60.587883], // Координаты офиса на ул. Чебышёва, 6
+                        zoom: 16,
+                        controls: ['zoomControl', 'fullscreenControl']
+                    });
+                    
+                    // Создаем кастомную иконку маркера
+                    var myPlacemark = new ymaps.Placemark([56.824327, 60.587883], {
+                        hintContent: 'РК Мастер - Наружная реклама',
+                        balloonContentHeader: 'РК Мастер',
+                        balloonContentBody: '<strong>Адрес:</strong> г. Екатеринбург, ул. Чебышёва, 6<br>' +
+                                          '<strong>Телефон:</strong> +7 (343) 288-50-20<br>' +
+                                          '<strong>Режим работы:</strong> Пн-Пт: 9:00-18:00',
+                        balloonContentFooter: 'Наружная реклама полного цикла'
+                    }, {
+                        // Красная иконка маркера в стиле сайта
+                        iconLayout: 'default#imageWithContent',
+                        // SVG иконка красного цвета
+                        iconImageHref: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23d32f2f" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="white"/></svg>',
+                        iconImageSize: [40, 40],
+                        iconImageOffset: [-20, -40],
+                        balloonCloseButton: true
+                    });
+                    
+                    // Добавляем маркер на карту
+                    myMap.geoObjects.add(myPlacemark);
+                    
+                    // Открываем балун при загрузке
+                    myPlacemark.balloon.open();
+                    
+                    // Оптимизация для мобильных устройств
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        myMap.behaviors.disable('scrollZoom');
+                    }
+                    
+                    // Включаем масштабирование колесиком мыши для десктопа
+                    myMap.behaviors.enable('scrollZoom');
+                    
+                    // Скрываем сообщение об ошибке, если карта загрузилась
+                    document.getElementById('map-error').style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('Ошибка инициализации карты:', error);
+                    showMapError();
+                }
+            }
+            
+            function showMapError() {
+                // Показываем сообщение об ошибке
+                document.getElementById('map-error').style.display = 'flex';
+                document.getElementById('yandex-map').style.display = 'none';
+            }
+            
+            // Альтернатива: если API не загрузился, можно использовать iframe
+            // Раскомментируйте для использования iframe вместо API
+            /*
+            if (typeof ymaps === 'undefined') {
+                document.getElementById('yandex-map').innerHTML = 
+                    '<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A928954a706c23c15870699a3e86bafb6eab861483f71b1d75011437cf18c256c&amp;source=constructor" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>';
+                document.getElementById('map-error').style.display = 'none';
+            }
+            */
+        });
+    </script>
+    <!-- Конец скрипта Яндекс.Карт -->
 </body>
 </html>
