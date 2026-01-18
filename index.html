@@ -396,6 +396,7 @@
             object-fit: contain;
             object-position: center;
             transition: transform 0.5s ease;
+            background-color: #f8f9fa;
         }
 
         .team-photo-placeholder {
@@ -430,13 +431,6 @@
         .team-photo-placeholder:has(img[src=""]) .team-photo,
         .team-photo-placeholder:not(:has(img)) .team-photo {
             display: none;
-        }
-
-        .initials {
-            font-size: 4rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.8);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .team-info {
@@ -560,52 +554,81 @@
             line-height: 1.5;
         }
 
-        /* Отзывы */
+        /* Отзывы - обновленные стили */
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
         }
 
         .review-card {
             background: var(--white);
-            padding: 35px;
+            padding: 35px 30px;
             border-radius: 12px;
             border-left: 5px solid var(--primary-color);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             position: relative;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .review-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
         
         .review-card::before {
             content: '"';
             position: absolute;
-            top: 10px;
-            left: 15px;
+            top: 15px;
+            left: 20px;
             font-size: 5rem;
             color: rgba(211, 47, 47, 0.1);
             font-family: serif;
             line-height: 1;
+            z-index: 0;
+        }
+
+        .review-header {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+        }
+
+        .review-position {
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
         }
 
         .review-text {
-            font-style: italic;
-            margin-bottom: 25px;
             font-size: 1.05rem;
+            line-height: 1.7;
+            color: #444;
+            margin: 0 0 25px 0;
             position: relative;
             z-index: 1;
-            line-height: 1.6;
+            flex-grow: 1;
         }
 
-        .review-author {
-            font-weight: bold;
+        .review-footer {
             text-align: right;
-            color: var(--primary-color);
-            font-size: 0.95rem;
+            font-style: italic;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: auto;
         }
 
         /* Контакты */
@@ -820,6 +843,24 @@
             .team-info h3 {
                 font-size: 1.3rem;
             }
+            
+            /* Адаптив для отзывов */
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .review-card {
+                padding: 25px 20px;
+            }
+            
+            .review-name {
+                font-size: 1.3rem;
+            }
+            
+            .review-text {
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -865,6 +906,17 @@
             
             .team-info {
                 padding: 20px;
+            }
+            
+            /* Адаптив для отзывов */
+            .review-card {
+                padding: 20px 15px;
+            }
+            
+            .review-card::before {
+                font-size: 4rem;
+                top: 10px;
+                left: 15px;
             }
         }
     </style>
@@ -978,9 +1030,7 @@
             <div class="team-grid">
                 <div class="team-card">
                     <div class="team-photo-placeholder">
-                        <div class="team-photo-placeholder">
-                            <img src="roman.jpg" alt="Рома Ибатуллин - Директор РК Мастер" class="team-photo">
-                        </div>
+                        <img src="roman.jpg" alt="Рома Ибатуллин - Директор РК Мастер" class="team-photo">
                         <div class="initials">РИ</div>
                     </div>
                     <div class="team-info">
@@ -1002,9 +1052,7 @@
                 
                 <div class="team-card">
                     <div class="team-photo-placeholder">
-                        <div class="team-photo-placeholder">
-                            <img src="rimma.jpg" alt="Римма Алдиева - Специалист по наружной рекламе" class="team-photo">
-                        </div>
+                        <img src="rimma.jpg" alt="Римма Алдиева - Специалист по наружной рекламе" class="team-photo">
                         <div class="initials">РА</div>
                     </div>
                     <div class="team-info">
@@ -1082,20 +1130,69 @@
             <h2>Отзывы клиентов</h2>
             <div class="reviews-grid">
                 <div class="review-card">
-                    <p class="review-text">«Работаем с «РК Мастер» на постоянной основе по аренде щитов. Нравится их адресная программа и оперативность. Менеджеры всегда на связи, фотоотчеты предоставляют вовремя. Надежный подрядчик в Екатеринбурге.»</p>
-                    <p class="review-author">— Алексей В., Маркетолог застройщика</p>
+                    <div class="review-header">
+                        <h3 class="review-name">Евгений Аникин</h3>
+                        <p class="review-position">КОМПАНИЯ ЭНТУЗИАСТ, ИНТЕРНЕТ-МАГАЗИН KUVALDA.RU<br>РУКОВОДИТЕЛЬ ФИЛИАЛА В Г. ЕКАТЕРИНБУРГ</p>
+                    </div>
+                    <p class="review-text">РК Мастер, в отличие от других компаний, сначала подробно изучили наш ассортимент, направление деятельности, нашу целевую аудиторию, факторы сезонности и только после этого сделали предложение! По каждому месту, предложенному нам, приводились резонные аргументы, насколько оно рабочее, насколько хорошо просматривается, насколько соответствует направление и т.д.</p>
+                    <div class="review-footer">
+                        Искренне желаю компании 1-й РК Мастер успехов, удачи и процветания!
+                    </div>
                 </div>
+                
                 <div class="review-card">
-                    <p class="review-text">«Заказывали сложную световую вывеску с контражурной подсветкой для ресторана. Результат превзошел ожидания! Сделали очень качественно, аккуратно и точно в срок. Отдельное спасибо монтажной бригаде.»</p>
-                    <p class="review-author">— Елена С., Управляющая рестораном</p>
+                    <div class="review-header">
+                        <h3 class="review-name">Анастасия Козьмина</h3>
+                        <p class="review-position">ООО «ТОРГОВЫЙ ДОМ «ЭКОВЕР»<br>МЕНЕДЖЕР ПО МАРКЕТИНГУ И РЕКЛАМЕ</p>
+                    </div>
+                    <p class="review-text">Выражаем благодарность рекламному агентству «РК Мастер» за качественное и оперативное размещение наружной рекламы (щиты 6*3 м) ЭКОВЕР в 2015 году. Особой и отличительной чертой «РК Мастер» является наличие собственной монтажной группы, что позволяет производить сложный и качественный монтаж наружной рекламы с применением дополнительных нестандартных конструкций.</p>
+                    <div class="review-footer">
+                        Также, хотелось бы отметить высокий уровень профессионализма сотрудников компании и компетентность в решении любых вопросов, связанных с планированием и размещением наружной рекламы.
+                    </div>
                 </div>
+                
                 <div class="review-card">
-                    <p class="review-text">«Обращались за брендированием корпоративного транспорта. Оперативно разработали макет, быстро напечатали и оклеили машины в выходные, чтобы не останавливать работу. Цены адекватные.»</p>
-                    <p class="review-author">— Дмитрий К., Транспортная компания</p>
+                    <div class="review-header">
+                        <h3 class="review-name">Наталья Куликова</h3>
+                        <p class="review-position">ГРУППА КОМПАНИЙ «СТРОНГРУП»<br>КОММЕРЧЕСКИЙ ДИРЕКТОР</p>
+                    </div>
+                    <p class="review-text">Наша компания работает с РК Мастер на протяжении многих лет. Нам всегда предоставляют лучшие места, которые соответствуют нашим запросам.</p>
+                    <div class="review-footer">
+                        Спасибо Вам за ваш профессионализм, оперативность, за индивидуальный подход, за понимание и терпение. Отдельное спасибо Римме за отзывчивость. Будем рады сотрудничать и дальше!!!
+                    </div>
                 </div>
-                 <div class="review-card">
-                    <p class="review-text">«Срочно требовалась широкоформатная печать баннеров для мероприятия. Ребята из РК Мастер выручили — напечатали всё за сутки с отличным качеством. Профессиональный подход к делу.»</p>
-                    <p class="review-author">— Мария И., Организатор мероприятий</p>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <h3 class="review-name">Анель Тухфатулина</h3>
+                        <p class="review-position">ОАО «СВЕРДЛОВСКИЙ ХЛЕБОМАКАРОННЫЙ КОМБИНАТ СМАК»<br>ВЕДУЩИЙ СПЕЦИАЛИСТ ПО МАРКЕТИНГУ И РЕКЛАМЕ</p>
+                    </div>
+                    <p class="review-text">ОАО «Свердловский хлебомакаронный комбинат СМАК» сотрудничает с компанией «РК Мастер» больше года. За это время был проведен крупный проект по размещению наружной рекламы в г. Екатеринбург. Сотрудники агентства проявили себя как надежные и компетентные партнеры, которые умеют быстро реагировать и готовы к конструктивному решению проблем.</p>
+                    <div class="review-footer">
+                        В настоящее время хлебокомбинат «СМАК» продолжает сотрудничество с «РК Мастер» и рекомендует его в качестве надежного партнера.
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <h3 class="review-name">Наталья Конева</h3>
+                        <p class="review-position">КОМПАНИЯ «МАЙ БЭБИ»<br>ДИРЕКТОР</p>
+                    </div>
+                    <p class="review-text">Несколько лет работаем с компанией «Первый РК Мастер», нет совершенно никаких замечаний. Нужно щит в том или ином районе, обязательно найдут или сделают множество других предложений. Фотоотчеты присылают каждый месяц и вовремя.</p>
+                    <div class="review-footer">
+                        Спасибо нашему замечательному менеджеру Светлане Мельниченко! Спасибо компании за внимательное отношение к клиенту!
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <h3 class="review-name">Андрей Жеребцов</h3>
+                        <p class="review-position">РЕСТОРАН «МАКСИМИЛИАНС»<br>АРТ-ДИРЕКТОР ФИЛИАЛА В Г. ЕКАТЕРИНБУРГ</p>
+                    </div>
+                    <p class="review-text">Ресторан "Maximilian's" Екатеринбург выражает огромную благодарность компании "Первый РК Мастер", а именно Курилович Татьяне. Приятно работать с профессионалами своего дела! Мы очень ценим ответственность и порядочность в наших отношениях.</p>
+                    <div class="review-footer">
+                        За два года благодаря Татьяне, ресторан смог очень эффектно и заметно "зайти" в город при открытии, поддерживать имидж и главное очень эффективно продавать за счет грамотной рекламной кампании. Огромное спасибо и успехов в работе!
+                    </div>
                 </div>
             </div>
         </div>
