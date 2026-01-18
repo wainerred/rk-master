@@ -350,6 +350,129 @@
             margin-bottom: 10px;
         }
 
+        /* Секция "Наша команда" */
+        .team {
+            background-color: var(--light-bg);
+            padding: 80px 0;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .team-photo-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .initials {
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .team-info {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-info h3 {
+            margin: 0 0 5px 0;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        .team-position {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-contacts {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .team-contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .team-contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .team-icon {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+
+        .team-contact-item a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            word-break: break-all;
+        }
+
+        .team-contact-item a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .team-description {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin: 0;
+            flex-grow: 1;
+        }
+
         /* Портфолио */
         .portfolio {
             background-color: var(--light-bg);
@@ -641,6 +764,29 @@
                 padding: 14px 35px;
                 font-size: 0.95rem;
             }
+            
+            /* Адаптив для команды */
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                max-width: 500px;
+            }
+            
+            .team-photo-placeholder {
+                height: 180px;
+            }
+            
+            .initials {
+                font-size: 3.5rem;
+            }
+            
+            .team-info {
+                padding: 25px;
+            }
+            
+            .team-info h3 {
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -665,6 +811,28 @@
             .logo-img {
                 height: 35px;
             }
+            
+            /* Адаптив для команды */
+            .team {
+                padding: 60px 0;
+            }
+            
+            .section-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+            }
+            
+            .team-grid {
+                gap: 25px;
+            }
+            
+            .team-card {
+                border-radius: 10px;
+            }
+            
+            .team-info {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -681,6 +849,7 @@
                 <!-- Десктопное меню -->
                 <ul class="nav-links">
                     <li><a href="#about">О компании</a></li>
+                    <li><a href="#team">Наша команда</a></li>
                     <li><a href="#portfolio">Портфолио</a></li>
                     <li><a href="#reviews">Отзывы</a></li>
                     <li><a href="#contacts">Контакты</a></li>
@@ -699,6 +868,7 @@
         <div class="mobile-nav" id="mobileNav">
             <ul>
                 <li><a href="#about" class="mobile-link">О компании</a></li>
+                <li><a href="#team" class="mobile-link">Наша команда</a></li>
                 <li><a href="#portfolio" class="mobile-link">Портфолио</a></li>
                 <li><a href="#reviews" class="mobile-link">Отзывы</a></li>
                 <li><a href="#contacts" class="mobile-link">Контакты</a></li>
@@ -748,6 +918,59 @@
                      <div class="stat-box">
                         <span class="stat-number">24/7</span>
                         <span>Ваша реклама работает</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team">
+        <div class="container">
+            <h2>Наша команда</h2>
+            <p class="section-subtitle">Профессионалы, которые превращают ваши идеи в эффективную рекламу</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo-placeholder">
+                        <!-- Здесь будет фото сотрудника -->
+                        <div class="initials">РИ</div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Рома Ибатуллин</h3>
+                        <p class="team-position">ДИРЕКТОР</p>
+                        <div class="team-contacts">
+                            <div class="team-contact-item">
+                                <span class="team-icon">📞</span>
+                                <a href="tel:+73432885020">+7 (343) 288-50-20</a>
+                            </div>
+                            <div class="team-contact-item">
+                                <span class="team-icon">✉️</span>
+                                <a href="mailto:r.ibatullin@rkmaster.ru">r.ibatullin@rkmaster.ru</a>
+                            </div>
+                        </div>
+                        <p class="team-description">Управляет компанией с момента основания. Отвечает за стратегическое развитие, ключевые проекты и партнёрские отношения.</p>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-photo-placeholder">
+                        <!-- Здесь будет фото сотрудника -->
+                        <div class="initials">РА</div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Римма Алдиева</h3>
+                        <p class="team-position">СПЕЦИАЛИСТ ПО НАРУЖНОЙ РЕКЛАМЕ</p>
+                        <div class="team-contacts">
+                            <div class="team-contact-item">
+                                <span class="team-icon">📞</span>
+                                <a href="tel:+73432885020">+7 (343) 288-50-20</a>
+                            </div>
+                            <div class="team-contact-item">
+                                <span class="team-icon">✉️</span>
+                                <a href="mailto:r.aldieva@rkmaster.ru">r.aldieva@rkmaster.ru</a>
+                            </div>
+                        </div>
+                        <p class="team-description">Профессиональный консультант по наружной рекламе. Поможет подобрать оптимальные рекламные поверхности и разработать эффективную медиастратегию.</p>
                     </div>
                 </div>
             </div>
