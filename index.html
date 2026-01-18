@@ -390,6 +390,14 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
 
+        .team-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s ease;
+        }
+
         .team-photo-placeholder {
             height: 200px;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -397,6 +405,31 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .team-photo-placeholder:hover .team-photo {
+            transform: scale(1.05);
+        }
+
+        /* Если фото не загрузилось, показываем инициалы */
+        .initials {
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: absolute;
+            display: none;
+        }
+
+        .team-photo-placeholder:has(img[src=""]) .initials,
+        .team-photo-placeholder:not(:has(img)) .initials {
+            display: flex;
+        }
+
+        .team-photo-placeholder:has(img[src=""]) .team-photo,
+        .team-photo-placeholder:not(:has(img)) .team-photo {
+            display: none;
         }
 
         .initials {
